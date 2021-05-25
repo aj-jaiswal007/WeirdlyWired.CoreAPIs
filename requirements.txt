@@ -1,0 +1,16 @@
+asgiref==3.3.4
+Django==3.2.3
+pytz==2021.1
+sqlparse==0.4.1
+
+# To load env variables
+python-dotenv==0.17.1
+
+# for different env configurations
+django-configurations==2.2
+
+# For websockets
+channels==3.0.3
+
+# Rest APIs
+djangorestframework==3.12.4
