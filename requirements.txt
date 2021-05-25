@@ -3,6 +3,9 @@ Django==3.2.3
 pytz==2021.1
 sqlparse==0.4.1
 
+# pre-commit hooks
+pre-commit
+
 # To load env variables
 python-dotenv==0.17.1
 

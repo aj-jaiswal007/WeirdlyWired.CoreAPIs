@@ -1,9 +1,11 @@
 from rest_framework.views import APIView, Response, status
-class Test(APIView):
+from rest_framework.permissions import IsAuthenticated
 
+
+class Test(APIView):
     def get(self, request):
         from django.conf import settings
-        return Response(data={
-            "Key": settings.DEBUG,
-            "h": settings.TEST
-            }, status=status.HTTP_200_OK)
+
+        return Response(
+            data={"message": "Hello this is demo"}, status=status.HTTP_200_OK
+        )
