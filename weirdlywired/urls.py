@@ -22,4 +22,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("v1/login", LoginView.as_view()),
     path("v1/tenant/", include("tenant.urls")),
+    path("v1/chat/", include("chat.urls")),
 ]

@@ -35,6 +35,21 @@ def token_expire_handler(token: Token) -> Tuple[bool, Token]:
     return (is_expired, token)
 
 
+def verify_token_key(key: str) -> Tuple[User, Token]:
+    try:
+        token = Token.objects.get(key=key)
+    except Token.DoesNotExist:
+        raise AuthenticationFailed("TOKEN_INVALID")
+
+    if not token.user.is_active:
+        raise AuthenticationFailed("USER_INACTIVE")
+
+    if is_token_expired(token=token):
+        raise AuthenticationFailed("TOKEN_EXPIRED")
+
+    return (token.user, token)
+
+
 """
 Custom Default Authentication classes
 """
@@ -47,15 +62,4 @@ class ExpiringTokenAuthentication(TokenAuthentication):
     """
 
     def authenticate_credentials(self, key: str) -> Tuple[User, Token]:
-        try:
-            token = Token.objects.get(key=key)
-        except Token.DoesNotExist:
-            raise AuthenticationFailed("TOKEN_INVALID")
-
-        if not token.user.is_active:
-            raise AuthenticationFailed("USER_INACTIVE")
-
-        if is_token_expired(token=token):
-            raise AuthenticationFailed("TOKEN_EXPIRED")
-
-        return (token.user, token)
+        return verify_token_key(key=key)

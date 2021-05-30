@@ -49,7 +49,8 @@ class Common(Configuration):
         "rest_framework.authtoken",
         # project apps
         "tenant",
-        "websocket_chat",
+        "websocket",
+        "chat",
     ]
 
     # DRF token auth settings
@@ -151,8 +152,8 @@ class Common(Configuration):
     AUTH_USER_MODEL = "tenant.User"
 
     EXPIRE_TOKEN_AFTER_SECONDS = int(
-        os.environ.get("EXPIRE_TOKEN_AFTER_SECONDS", 60)
-    )  # one week token expiry
+        os.environ.get("EXPIRE_TOKEN_AFTER_SECONDS", 86400)
+    )  # one day token expiry
 
     # ENV VARIABLES
     TEST = os.environ.get("TEST")
