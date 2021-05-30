@@ -1,5 +1,5 @@
-from rest_framework.serializers import Serializer
+from rest_framework.serializers import ModelSerializer
 
 
-class BaseSerializer(Serializer):
+class BaseSerializer(ModelSerializer):
     pass

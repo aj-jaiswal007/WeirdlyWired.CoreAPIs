@@ -35,6 +35,9 @@ class Common(Configuration):
     # Application definition
 
     INSTALLED_APPS = [
+        # Websocket chat
+        "channels",
+        # Default ones
         "django.contrib.admin",
         "django.contrib.auth",
         "django.contrib.contenttypes",
@@ -42,17 +45,17 @@ class Common(Configuration):
         "django.contrib.messages",
         "django.contrib.staticfiles",
         # Third party apps
-        "channels",
         "rest_framework",
         "rest_framework.authtoken",
         # project apps
         "tenant",
+        "websocket_chat",
     ]
 
     # DRF token auth settings
     REST_FRAMEWORK = {
         "DEFAULT_AUTHENTICATION_CLASSES": (
-            "rest_framework.authentication.TokenAuthentication",
+            "weirdlywired.authentication.ExpiringTokenAuthentication",
         ),
         "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
     }
@@ -89,13 +92,25 @@ class Common(Configuration):
 
     # Database
     # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
+    DATABASE_NAME = os.environ.get("DATABASE_NAME")
+    DATABASE_USER = os.environ.get("DATABASE_USER")
+    DATABASE_PASSWORD = os.environ.get("DATABASE_PASSWORD")
+    DATABASE_HOST = os.environ.get("DATABASE_HOST")
+    DATABASE_PORT = os.environ.get("DATABASE_PORT")
 
     DATABASES = {
         "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+            "ENGINE": "django.db.backends.postgresql_psycopg2",
+            "NAME": DATABASE_NAME,
+            "USER": DATABASE_USER,
+            "PASSWORD": DATABASE_PASSWORD,
+            "HOST": DATABASE_HOST,
+            "PORT": DATABASE_PORT,
         }
     }
+
+    # Configure Channel Layers in env specific settings
+    CHANNEL_LAYERS = None
 
     # Password validation
     # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -134,6 +149,10 @@ class Common(Configuration):
     STATIC_URL = "/static/"
 
     AUTH_USER_MODEL = "tenant.User"
+
+    EXPIRE_TOKEN_AFTER_SECONDS = int(
+        os.environ.get("EXPIRE_TOKEN_AFTER_SECONDS", 60)
+    )  # one week token expiry
 
     # ENV VARIABLES
     TEST = os.environ.get("TEST")
