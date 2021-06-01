@@ -4,16 +4,16 @@ from .base_consumer import BaseConsumer
 
 class EchoConsumer(BaseConsumer):
     async def websocket_connect(self, event):
-        print("`websocket_connect` is called", event)
+        print("`websocket_connect` is called", event, self.scope)
         await self.accept()
 
     async def websocket_receive(self, event):
         user: User = self.scope["user"]
         print(user.__dict__)
-        print("`websocket_receive` is called", event)
+        print("`websocket_receive` is called", event, self.scope)
         print("Username", self.scope["url_route"]["kwargs"].get("userkey"))
         await self.send_text("[Echo] {}".format(self.get_text(event)))
 
     async def websocket_disconnect(self, event):
-        print("`websocket_disconnect` is called", event)
+        print("`websocket_disconnect` is called", event, self.scope)
         # Perform clean up code here

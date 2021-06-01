@@ -1,9 +1,9 @@
-from urllib.parse import parse_qs
+from urllib.parse import parse_qsl
 
 from channels.db import database_sync_to_async
+from rest_framework_simplejwt.tokens import AccessToken
 
 from tenant.models.user_model import User
-from weirdlywired.authentication import verify_token_key
 
 
 class WSTokenAuthMiddleWare:
@@ -22,10 +22,15 @@ class WSTokenAuthMiddleWareInstance:
     async def __call__(self, receive, send):
         self.scope["user"] = await self.get_user()
         return await self.inner(self.scope, receive, send)
-        # return await inner()
 
     @database_sync_to_async
     def get_user(self) -> User:
-        token_key = parse_qs(self.scope["query_string"].decode("utf8")).get("token")[0]
-        user, _ = verify_token_key(key=token_key)
-        return user
+        """
+        Raises rest_framework_simplejwt.exceptions.TokenError if token is not valid
+        """
+        access_token = dict(parse_qsl(self.scope["query_string"].decode())).get("token")
+        assert access_token, "token is required to establish a connection"
+        access_token = AccessToken(access_token)
+        access_token.verify_token_type()
+        access_token.verify()
+        return User.objects.get(id=access_token.payload.get("user_id"))

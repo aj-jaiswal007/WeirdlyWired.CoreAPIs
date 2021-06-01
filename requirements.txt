@@ -18,6 +18,7 @@ uvicorn==0.13.4
 
 # Rest APIs
 djangorestframework==3.12.4
+djangorestframework-simplejwt==4.7.1
 
 # Developer tools
 ipython==7.24.0 # interactive python console

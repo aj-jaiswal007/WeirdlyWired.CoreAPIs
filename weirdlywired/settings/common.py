@@ -11,8 +11,10 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-from dotenv import load_dotenv
+from datetime import timedelta
+
 from configurations import Configuration
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 load_dotenv()
@@ -46,7 +48,6 @@ class Common(Configuration):
         "django.contrib.staticfiles",
         # Third party apps
         "rest_framework",
-        "rest_framework.authtoken",
         # project apps
         "tenant",
         "websocket",
@@ -55,9 +56,9 @@ class Common(Configuration):
 
     # DRF token auth settings
     REST_FRAMEWORK = {
-        "DEFAULT_AUTHENTICATION_CLASSES": (
-            "weirdlywired.authentication.ExpiringTokenAuthentication",
-        ),
+        "DEFAULT_AUTHENTICATION_CLASSES": [
+            "rest_framework_simplejwt.authentication.JWTAuthentication",
+        ],
         "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
     }
 
@@ -151,9 +152,16 @@ class Common(Configuration):
 
     AUTH_USER_MODEL = "tenant.User"
 
+    # TODO: Remove this
     EXPIRE_TOKEN_AFTER_SECONDS = int(
         os.environ.get("EXPIRE_TOKEN_AFTER_SECONDS", 86400)
     )  # one day token expiry
+
+    # JWT Settings
+    SIMPLE_JWT = {
+        "REFRESH_TOKEN_LIFETIME": timedelta(days=15),
+        "ROTATE_REFRESH_TOKENS": True,
+    }
 
     # ENV VARIABLES
     TEST = os.environ.get("TEST")
