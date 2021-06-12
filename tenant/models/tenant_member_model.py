@@ -10,7 +10,7 @@ from .user_model import User
 class TenantMember(BaseModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     tenant = models.ForeignKey(Tenant, on_delete=models.CASCADE)
-    role = models.IntegerField(max_length=16, choices=MemberRoleType.choices)
+    role = models.IntegerField(choices=MemberRoleType.choices)
 
     class Meta:
         db_table = "TenantMember"

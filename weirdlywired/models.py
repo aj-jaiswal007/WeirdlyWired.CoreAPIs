@@ -3,7 +3,6 @@ import json
 import os
 from typing import Any
 
-from django.contrib.postgres.fields import JSONField
 from django.core import exceptions
 from django.db import models
 from jsonschema import exceptions as jsonschema_exceptions
@@ -21,7 +20,7 @@ class BaseModel(models.Model):
         abstract = True
 
 
-class JSONSchemaField(JSONField):
+class JSONSchemaField(models.JSONField):
     def __init__(self, *args, **kwargs) -> None:
         self.schema = kwargs.pop("schema", None)
         super().__init__(*args, **kwargs)
