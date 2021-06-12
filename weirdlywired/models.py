@@ -15,6 +15,7 @@ class BaseModel(models.Model):
     key = models.CharField(max_length=32, unique=True, default=get_random_key)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
+    deleted = models.BooleanField(default=False)
 
     class Meta:
         abstract = True

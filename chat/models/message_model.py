@@ -11,7 +11,7 @@ class Message(BaseModel):
         choices=MessageType.choices, default=MessageType.TEXT
     )
     content = models.TextField(blank=False, null=False)
-    sender = models.ForeignKey(User, on_delete=models.SET_NULL)
+    sender = models.ForeignKey(User, on_delete=models.CASCADE)
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
 
     class Meta:
