@@ -1,0 +1,16 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "title": "Profle",
+    "description": "Profile information of a user",
+    "type": "object",
+    "properties": {
+        "profile_url": {
+            "description": "Profile picture image url",
+            "type": "string"
+        },
+        "bio": {
+            "description": "Any bio updated by user",
+            "type": "string"
+        }
+    }
+}

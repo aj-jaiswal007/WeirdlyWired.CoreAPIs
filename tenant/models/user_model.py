@@ -10,6 +10,7 @@ class User(AbstractUser):
     email = models.EmailField(_("email address"), unique=True)
     # TODO: add required fields here
     phone = models.CharField(max_length=16, unique=False, blank=True, null=True)
+    profile_info = models.JSONField()
 
     REQUIRED_FIELDS = ["email", "first_name", "last_name"]
     objects = UserManager()
@@ -18,4 +19,4 @@ class User(AbstractUser):
         return self.email
 
     class Meta:
-        db_table = "user"
+        db_table = "User"

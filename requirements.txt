@@ -29,3 +29,7 @@ mkdocs==1.1.2
 # Database related
 psycopg2==2.8.6 # postgre Adaptor for Django
 pillow==8.2.0 # if we want to store images in DB
+
+
+# To validate json field schema
+jsonschema==3.2.0
