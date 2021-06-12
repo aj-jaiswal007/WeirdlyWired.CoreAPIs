@@ -1,8 +1,10 @@
+from django.db import models
+
+from tenant.enums.model_enums import MemberRoleType
 from tenant.models.tenant_model import Tenant
 from weirdlywired.models import BaseModel
-from django.db import models
+
 from .user_model import User
-from tenant.enums.model_enums import MemberRoleType
 
 
 class TenantMember(BaseModel):

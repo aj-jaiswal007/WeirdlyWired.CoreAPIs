@@ -1,16 +1,21 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+
 from tenant.managers import UserManager
 from weirdlywired.helpers.secrets_helper import get_random_key
+from weirdlywired.models import JSONSchemaField
 
 
 class User(AbstractUser):
     key = models.CharField(max_length=32, unique=True, default=get_random_key)
     email = models.EmailField(_("email address"), unique=True)
-    # TODO: add required fields here
+
+    # Custom fields
     phone = models.CharField(max_length=16, unique=False, blank=True, null=True)
-    profile_info = models.JSONField()
+    profile_info = JSONSchemaField(
+        schema="tenant/schemas/profile_schema.json", default=dict
+    )
 
     REQUIRED_FIELDS = ["email", "first_name", "last_name"]
     objects = UserManager()

@@ -1,6 +1,7 @@
 from django.db import models
-from weirdlywired.models import BaseModel
+
 from chat.enums.model_enums import RoomType
+from weirdlywired.models import BaseModel
 
 
 class Room(BaseModel):
