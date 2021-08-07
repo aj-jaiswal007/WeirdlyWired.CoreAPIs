@@ -1,43 +1,34 @@
-from channels.consumer import AsyncConsumer
-from websocket.constants import SendEvent
-from typing import Union
+from channels.generic.websocket import AsyncWebsocketConsumer
+from channels.layers import get_channel_layer
 
 
-class BaseConsumer(AsyncConsumer):
-    """
-    Implement these methods
-    """
+class BaseConsumer(AsyncWebsocketConsumer):
+    groups = ["broadcast"]
 
-    async def websocket_connect(self, event):
-        raise NotImplementedError("`websocket_connect` is not implemented")
+    async def connect(self):
+        raise NotImplementedError("`connect` is not implemented")
 
-    async def websocket_receive(self, event):
-        raise NotImplementedError("`websocket_receive` is not implemented")
+    async def receive(self, text_data=None, bytes_data=None):
+        raise NotImplementedError("`receive` is not implemented")
 
-    async def websocket_disconnect(self, event):
-        raise NotImplementedError("`websocket_disconnect` is not implemented")
+    async def disconnect(self, close_code):
+        raise NotImplementedError("`receive` is not implemented")
 
-    """
-    Util methods
-    """
+    async def send_to_channel(self, channel_name: str, event_type: str, text_data: str):
+        channel_layer = get_channel_layer()
+        await channel_layer.send(channel_name, {"type": event_type, "text": text_data})
 
-    async def accept(self):
-        await self.send({"type": SendEvent.ACCEPT})
-
-    async def send_text(self, text: str):
-        await self.send({"type": SendEvent.SEND, "text": text})
-
-    async def send_bytes(self, text: Union[str, bytes]):
-        if isinstance(text, str):
-            text = text.encode()
-        await self.send({"type": SendEvent.SEND, "bytes": text})
-
-    async def close(self, code: int = 1000):
-        """To close the connection"""
-        await self.send({"type": SendEvent.CLOSE, "code": code})
-
-    def get_text(self, event) -> str:
-        return event["text"]
-
-    def receive_bytes(self, event) -> bytes:
-        return event["bytes"]
+    async def send_with_type(
+        self, type: str = "websocket.send", text_data=None, bytes_data=None, close=False
+    ):
+        """
+        Sends a reply back down the WebSocket
+        """
+        if text_data is not None:
+            await self.base_send({"type": type, "text": text_data})
+        elif bytes_data is not None:
+            await self.base_send({"type": type, "bytes": bytes_data})
+        else:
+            raise ValueError("You must pass one of bytes_data or text_data")
+        if close:
+            await self.close(close)

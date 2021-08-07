@@ -13,10 +13,11 @@ class UserBasicInfoSerializer(BaseSerializer):
         model = User
         fields = (
             "id",
+            "key",
+            "username",
             "first_name",
             "last_name",
             "email",
             "phone",
-            "date_joined",
-            "last_login",
+            "profile_info",
         )

@@ -14,7 +14,7 @@ class User(AbstractUser):
     # Custom fields
     phone = models.CharField(max_length=16, unique=False, blank=True, null=True)
     profile_info = JSONSchemaField(
-        schema="tenant/schemas/profile_schema.json", default=dict
+        schema="../schemas/profile_schema.json", default=dict
     )
 
     REQUIRED_FIELDS = ["email", "first_name", "last_name"]

@@ -20,6 +20,9 @@ uvicorn==0.13.4
 djangorestframework==3.12.4
 djangorestframework-simplejwt==4.7.1
 
+#CORS
+django-cors-headers==3.7.0
+
 # Developer tools
 ipython==7.24.0 # interactive python console
 ipdb==0.13.8 # interactive python debugger
