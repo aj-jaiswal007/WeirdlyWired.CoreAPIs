@@ -157,6 +157,7 @@ class Common(Configuration):
     # JWT Settings
     SIMPLE_JWT = {
         "REFRESH_TOKEN_LIFETIME": timedelta(days=15),
+        "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
         "ROTATE_REFRESH_TOKENS": True,
     }
 
