@@ -12,13 +12,13 @@ class BaseView(APIView):
             status=status.HTTP_200_OK,
         )
 
-    def unauthorized_response(self, message: str) -> Response:
+    def unauthorized_response(self, message: str = None) -> Response:
         return Response(
             data={"success": False, "message": message or "Unauthorized Access"},
             status=status.HTTP_401_UNAUTHORIZED,
         )
 
-    def forbidden_response(self, message: str) -> Response:
+    def forbidden_response(self, message: str = None) -> Response:
         return Response(
             data={
                 "success": False,
