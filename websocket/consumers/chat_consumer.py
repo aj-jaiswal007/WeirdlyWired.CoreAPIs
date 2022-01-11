@@ -18,6 +18,7 @@ class ChatConsumer(BaseConsumer):
         await self.accept()
 
     async def receive(self, text_data=None, bytes_data=None):
+        print("Msg revceived", text_data)
         user: User = self.scope["user"]
         data = json.loads(text_data)
         receiver_id = data["receiver_id"]

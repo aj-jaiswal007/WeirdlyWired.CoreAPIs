@@ -31,4 +31,4 @@ application = ProtocolTypeRouter(
     }
 )
 
-# daphne -b 192.168.29.145 -p 8000 weirdlywired.asgi:application --ping-interval 5
+# daphne -b 192.168.29.145 -p 8000 --ping-interval 2 --ping-timeout 5 weirdlywired.asgi:application
