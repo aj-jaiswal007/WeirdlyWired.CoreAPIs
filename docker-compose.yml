@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5432:5432"
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+  # web:
+  #   build: .
+  #   command: daphne -b 192.168.1.5 -p 8000 --ping-interval 2 --ping-timeout 5 weirdlywired.asgi:application
+  #   environment:
+  #     - DATABASE_NAME=wwired
+  #     - DATABASE_USER=postgres
+  #     - DATABASE_PASSWORD=postgres
+  #     - DATABASE_HOST=localhost
+  #     - DATABASE_PORT=5432
+  #     - REDIS_HOST=localhost
+  #     - REDIS_PORT=6379
+
+  #   ports:
+  #     - "8000:8000"
+  #   depends_on:
+  #     - db
+  #     - redis

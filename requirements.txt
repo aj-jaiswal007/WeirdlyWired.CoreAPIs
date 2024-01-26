@@ -30,7 +30,7 @@ flake8==3.9.2 # Code formatter
 mkdocs==1.1.2
 
 # Database related
-psycopg2==2.8.6 # postgre Adaptor for Django
+psycopg2-binary==2.9.9 # postgre Adaptor for Django
 daphne==3.0.2 # if we want to store images in DB
 channels_redis==3.3.1
 
