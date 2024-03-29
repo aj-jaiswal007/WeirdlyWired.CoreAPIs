@@ -18,11 +18,10 @@ from dotenv import load_dotenv
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 load_dotenv()
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 class Common(Configuration):
-
     # Quick-start development settings - unsuitable for production
     # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
@@ -95,11 +94,11 @@ class Common(Configuration):
 
     # Database
     # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-    DATABASE_NAME = os.environ.get("DATABASE_NAME")
-    DATABASE_USER = os.environ.get("DATABASE_USER")
-    DATABASE_PASSWORD = os.environ.get("DATABASE_PASSWORD")
-    DATABASE_HOST = os.environ.get("DATABASE_HOST")
-    DATABASE_PORT = os.environ.get("DATABASE_PORT")
+    DATABASE_NAME = os.getenv("DATABASE_NAME")
+    DATABASE_USER = os.getenv("DATABASE_USER")
+    DATABASE_PASSWORD = os.getenv("DATABASE_PASSWORD")
+    DATABASE_HOST = os.getenv("DATABASE_HOST")
+    DATABASE_PORT = os.getenv("DATABASE_PORT")
 
     DATABASES = {
         "default": {
@@ -150,6 +149,7 @@ class Common(Configuration):
     # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
     STATIC_URL = "/static/"
+    STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
     AUTH_USER_MODEL = "tenant.User"
 
