@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from weirdlywired.common.base_serializer import BaseSerializer
+from common.base_serializer import BaseSerializer
 from tenant.models.user_model import User
 
 

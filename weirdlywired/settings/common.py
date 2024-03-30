@@ -163,3 +163,6 @@ class Common(Configuration):
     # ENV VARIABLES
     TEST = os.environ.get("TEST")
     CORS_ALLOW_ALL_ORIGINS = True
+
+    # LLM Settings
+    GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
