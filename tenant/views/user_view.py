@@ -1,6 +1,6 @@
 from tenant.serializers.user_serializer import UserBasicInfoSerializer
 from tenant.models.user_model import User
-from weirdlywired.common.base_view import BaseViewMixin
+from common.base_view import BaseViewMixin
 from rest_framework.viewsets import ViewSet
 from rest_framework.views import APIView
 

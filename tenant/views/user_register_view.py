@@ -1,4 +1,4 @@
-from weirdlywired.common.base_view import BaseViewMixin
+from common.base_view import BaseViewMixin
 from rest_framework.views import APIView
 from tenant.serializers.user_register import UserRegisterSerializer
 

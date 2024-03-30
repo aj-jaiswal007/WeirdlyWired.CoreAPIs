@@ -3,9 +3,10 @@ from websocket.models.user_channel_model import UserChannel
 from websocket.utils.user_channel_utils import UserChannelUtils
 from tenant.models.user_model import User
 from websocket.dtos.msg_event import MessageEvent
-from weirdlywired.common.logger import logger
+from common.logger import logger
 from .base_consumer import BaseConsumer
 from llm.weirdly_wire import WeirdlyWire
+from llm.enums import AgentPersona
 
 
 class ChatConsumer(BaseConsumer):
@@ -19,12 +20,16 @@ class ChatConsumer(BaseConsumer):
         )
         await self.accept()
 
-    async def receive(self, text_data=None, bytes_data=None):
+    async def receive(self, text_data: str, bytes_data=None):
         logger.info(f"Msg revceived {text_data}")
         user: User = self.scope["user"]
         data = json.loads(text_data)
         receiver_id = data["receiver_id"]
-        user_message: str = self.wire.rewire_message(data["content"])
+        message_content = data["content"]
+        persona = AgentPersona(data.get("persona", "funny"))
+        user_message: str = self.wire.rewire_message(
+            text_data=message_content, persona=persona
+        )
         msg = MessageEvent(sender=user, content=user_message, receiver_id=receiver_id)
         await self.send(text_data=msg.text)
         try:
