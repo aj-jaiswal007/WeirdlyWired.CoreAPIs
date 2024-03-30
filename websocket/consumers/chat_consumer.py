@@ -26,7 +26,7 @@ class ChatConsumer(BaseConsumer):
         data = json.loads(text_data)
         receiver_id = data["receiver_id"]
         message_content = data["content"]
-        persona = AgentPersona(data.get("persona", "polite"))
+        persona = AgentPersona(data.get("persona", "funny"))
         user_message: str = self.wire.rewire_message(
             text_data=message_content, persona=persona
         )
