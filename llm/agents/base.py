@@ -1,11 +1,21 @@
 from abc import ABC
 from langchain_core.language_models.chat_models import BaseChatModel
 from common.logger import logger
+from google.generativeai.types.safety_types import HarmBlockThreshold, HarmCategory
+from langchain_google_genai import ChatGoogleGenerativeAI
 
 
 class BaseAgent(ABC):
     # To be defined by the child class
-    llm: BaseChatModel = None  # type: ignore
+    llm: BaseChatModel = ChatGoogleGenerativeAI(
+        model="gemini-pro",
+        safety_settings={
+            HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_NONE,
+            HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_NONE,
+            HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_NONE,
+            HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: HarmBlockThreshold.BLOCK_NONE,
+        },
+    )  # type: ignore
     prompt_template: str = None  # type: ignore
 
     def __str__(self) -> str:
