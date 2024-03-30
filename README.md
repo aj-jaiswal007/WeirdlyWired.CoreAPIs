@@ -1,12 +1,15 @@
 # WeirdlyWired.CoreAPIs
 
 ## To run the local server
+
 - Running local machine
+
 ```bash
 run command: uvicorn weirdlywired.asgi:application --reload --debug
 ```
 
 - Running at local network
+
 ```bash
 daphne -b <local-network> -p 8000 --ping-interval 2 --ping-timeout 5 weirdlywired.asgi:application
 
