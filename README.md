@@ -5,7 +5,7 @@
 - This project uses Google Gemini for LLM calls.
 - To get started you need to have a Google Gemini account and a Google Cloud Project.
 - Create an API key for Google Gemini from https://aistudio.google.com/app/apikey.
-- Clone .env.sample to .env and add the API key to the .env file.
+- Clone `.env.sample` to `.env` and add the API key to the `.env` file.
 - Install the requirements using the following command.
 
 ```bash
@@ -20,8 +20,8 @@ docker-compose up -d
 ```
 
 - Create a database in the local postgres server.
-- Add the database name, username and password to the .env file.
-- Add the redis server details to the .env file.
+- Add the database name, username and password to the `.env` file.
+- Add the redis server details to the `.env` file.
 - Run the migrations using the following command.
 
 ```bash
