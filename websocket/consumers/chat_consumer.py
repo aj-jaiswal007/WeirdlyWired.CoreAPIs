@@ -3,12 +3,14 @@ from websocket.models.user_channel_model import UserChannel
 from websocket.utils.user_channel_utils import UserChannelUtils
 from tenant.models.user_model import User
 from websocket.dtos.msg_event import MessageEvent
-
+from weirdlywired.common.logger import logger
 from .base_consumer import BaseConsumer
+from llm.weirdly_wire import WeirdlyWire
 
 
 class ChatConsumer(BaseConsumer):
     user_channel_utils = UserChannelUtils()
+    wire = WeirdlyWire()
 
     async def connect(self):
         user: User = self.scope["user"]
@@ -18,13 +20,12 @@ class ChatConsumer(BaseConsumer):
         await self.accept()
 
     async def receive(self, text_data=None, bytes_data=None):
-        print("Msg revceived", text_data)
+        logger.info(f"Msg revceived {text_data}")
         user: User = self.scope["user"]
         data = json.loads(text_data)
         receiver_id = data["receiver_id"]
-        msg = MessageEvent(
-            sender=user, content=data["content"], receiver_id=receiver_id
-        )
+        user_message: str = self.wire.rewire_message(data["content"])
+        msg = MessageEvent(sender=user, content=user_message, receiver_id=receiver_id)
         await self.send(text_data=msg.text)
         try:
             user_channel: UserChannel = (
